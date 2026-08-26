@@ -51,11 +51,11 @@ export default function generateParseImportAssertions(
 
 				// check if we already have an entry for an attribute
 				// if a duplicate entry is found, throw an error
-				// for now this logic will come into play only when someone declares `type` twice
-				if (attrNames.has(node.key.name)) {
+				const keyName = node.key.type === 'Identifier' ? node.key.name : node.key.value;
+				if (attrNames.has(keyName)) {
 					this.raise(this.pos, 'Duplicated key in attributes');
 				}
-				attrNames.add(node.key.name);
+				attrNames.add(keyName);
 
 				if (this.type !== tt.string) {
 					this.raise(this.pos, 'Only string is supported as an attribute value');
